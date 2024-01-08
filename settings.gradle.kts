@@ -61,6 +61,9 @@ dependencyResolutionManagement {
 		create("misc") {
 			plugin("dokka", "org.jetbrains.dokka").version("1.9.10")
 			plugin("detekt", "io.gitlab.arturbosch.detekt").version("1.18.0")
+
+			library("logging", "ch.qos.logback", "logback-classic").version("1.4.14")
+			library("klogging", "io.github.oshai", "kotlin-logging").version("6.0.1")
 		}
 	}
 }

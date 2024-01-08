@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
@@ -67,6 +68,8 @@ kotlin {
 	sourceSets {
 		val commonMain by getting {
 			dependencies {
+				implementation(misc.logging)
+				implementation(misc.klogging)
 				implementation(ktorio.bundles.client)
 			}
 		}
@@ -178,6 +181,7 @@ tasks {
 
 	afterEvaluate {
 		check {
+			dependsOn(withType<Detekt>())
 		}
 	}
 

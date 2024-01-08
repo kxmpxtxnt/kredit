@@ -1,6 +1,7 @@
 package fyi.pauli.kredit.api
 
 import fyi.pauli.kredit.internal.createKredit
+import io.github.oshai.kotlinlogging.KLogger
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 
@@ -23,7 +24,14 @@ public interface Kredit {
 	public var httpClientConfig: HttpClientConfig<CIOEngineConfig>
 
 	/**
+	 * Logger of the application.
+	 * @see KLogger
+	 */
+	public var logger: KLogger
+
+	/**
 	 * Application httpClient used to execute requests to the reddit api.
+	 * You'll not need to call it because its underlying in the wrapper.
 	 * @see HttpClient
 	 */
 	public val httpClient: HttpClient
@@ -47,12 +55,9 @@ public interface Kredit {
 	 * @see HttpClient
 	 */
 	public fun withDefaultHttpClient()
+
 }
 
 public fun kredit(
 	body: Kredit.() -> Unit
 ): Kredit = createKredit(body)
-
-public fun main() {
-
-}
