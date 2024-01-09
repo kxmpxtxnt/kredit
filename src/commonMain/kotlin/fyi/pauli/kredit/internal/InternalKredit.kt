@@ -23,11 +23,8 @@ internal class InternalKredit(
 	override val httpClient: HttpClient
 		get() = HttpClient(CIO) { httpClientConfig }
 
-	override var logger: KLogger
+	override val logger: KLogger
 		get() = KotlinLogging.logger("kredit")
-		set(value) {
-			logger = value
-		}
 
 	override fun withSecretFromEnvironment() {
 		applicationSecret = SECRET_FROM_ENVIRONMENT
