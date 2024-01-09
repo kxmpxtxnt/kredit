@@ -13,5 +13,5 @@ package fyi.pauli.kredit.annotations
 			"Make sure you fully read and understand documentation of the declaration that " +
 			"is marked as an internal API."
 )
-annotation class InternalKreditApi {
+public annotation class InternalKreditApi {
 }

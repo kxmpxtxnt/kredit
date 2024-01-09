@@ -32,6 +32,7 @@ internal class InternalKredit(
 
 	override fun withCustomHttpClient(body: HttpClientConfig<CIOEngineConfig>.() -> Unit) {
 		httpClientConfig.apply(body)
+		return
 	}
 
 	override fun withDefaultHttpClient() {

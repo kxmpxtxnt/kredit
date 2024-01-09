@@ -4,5 +4,5 @@ package fyi.pauli.kredit.api.oauth.secret
  * @author Paul Kindler
  * @since 07/01/2024
  */
-actual val SECRET_FROM_ENVIRONMENT: String
+public actual val SECRET_FROM_ENVIRONMENT: String
 	get() = System.getenv()[SECRET_ENV_KEY] ?: throw NullPointerException("Secret from $SECRET_ENV_KEY not found.")
