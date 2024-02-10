@@ -1,5 +1,6 @@
 package fyi.pauli.kredit.api
 
+import fyi.pauli.kredit.api.oauth.CodeObtainStrategy
 import fyi.pauli.kredit.internal.createKredit
 import io.github.oshai.kotlinlogging.KLogger
 import io.ktor.client.*
@@ -15,7 +16,19 @@ public interface Kredit {
 	 * Application secret for the reddit client
 	 * @see String
 	 */
-	public var applicationSecret: String
+	public val authenticationCode: String
+
+	/**
+	 * App id used for reddit user agent.
+	 * @see String
+	 */
+	public var appId: String
+
+	/**
+	 * App version used for reddit user agent.
+	 * @see String
+	 */
+	public var appVersion: String
 
 	/**
 	 * Application httpClientConfig to create [httpClient].
@@ -37,12 +50,10 @@ public interface Kredit {
 	public val httpClient: HttpClient
 
 	/**
-	 * Automatically load the [applicationSecret] from the environment.
-	 * @see String
-	 * @throws NotImplementedError when not implemented on current platforms.
-	 * @throws NullPointerException when environment variable is not set.
+	 * Strategy to obtain authentication code.
+	 * @see CodeObtainStrategy
 	 */
-	public fun withSecretFromEnvironment()
+	public var codeObtainStrategy: CodeObtainStrategy
 
 	/**
 	 * Configures [httpClientConfig] used for executing requests.
@@ -52,6 +63,7 @@ public interface Kredit {
 
 	/**
 	 * Add custom configuration to the [httpClientConfig].
+	 * Recommended to use because reddit has some rules such as a precise structure of the user agent.
 	 * @see HttpClient
 	 */
 	public fun withDefaultHttpClient()
@@ -59,5 +71,7 @@ public interface Kredit {
 }
 
 public fun kredit(
+	appId: String,
+	appVersion: String,
 	body: Kredit.() -> Unit
-): Kredit = createKredit(body)
+): Kredit = createKredit(appId, appVersion, body)

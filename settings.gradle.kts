@@ -8,6 +8,11 @@ pluginManagement {
 	}
 }
 
+include(
+	":api",
+	":core"
+)
+
 dependencyResolutionManagement {
 	versionCatalogs {
 		create("libs") {
@@ -36,21 +41,35 @@ dependencyResolutionManagement {
 		}
 
 		create("ktorio") {
-			library("ktor.cio", "io.ktor", "ktor-client-cio").version("2.3.7")
-			library("ktor.core", "io.ktor", "ktor-client-core").version("2.3.7")
-			library("ktor.testing", "io.ktor", "ktor-client-mock").version("2.3.7")
-			library("ktor.logging", "io.ktor", "ktor-client-logging").version("2.3.7")
-			library("ktor.encoding", "io.ktor", "ktor-client-encoding").version("2.3.7")
-			library("ktor.resources", "io.ktor", "ktor-client-resources").version("2.3.7")
-			library("ktor.negotiation", "io.ktor", "ktor-client-content-negotiation").version("2.3.7")
+			version("ktor", "2.3.7")
+			
+			library("server-cio", "io.ktor", "ktor-server-cio").versionRef("ktor")
+			library("server-core", "io.ktor", "ktor-server-core").versionRef("ktor")
+			library("server-negotiation", "io.ktor", "ktor-server-content-negotiation").versionRef("ktor")
+
+			bundle("server", listOf(
+				"server-cio",
+				"server-core",
+				"server-negotiation"
+			))
+			
+			library("client-cio", "io.ktor", "ktor-client-cio").versionRef("ktor")
+			library("client-core", "io.ktor", "ktor-client-core").versionRef("ktor")
+			library("client-auth", "io.ktor", "ktor-client-auth").versionRef("ktor")
+			library("client-testing", "io.ktor", "ktor-client-mock").versionRef("ktor")
+			library("client-logging", "io.ktor", "ktor-client-logging").versionRef("ktor")
+			library("client-encoding", "io.ktor", "ktor-client-encoding").versionRef("ktor")
+			library("client-resources", "io.ktor", "ktor-client-resources").versionRef("ktor")
+			library("client-negotiation", "io.ktor", "ktor-client-content-negotiation").versionRef("ktor")
 
 			bundle("client", listOf(
-				"ktor.cio",
-				"ktor.core",
-				"ktor.logging",
-				"ktor.encoding",
-				"ktor.resources",
-				"ktor.negotiation",
+				"client-cio",
+				"client-core",
+				"client-auth",
+				"client-logging",
+				"client-encoding",
+				"client-resources",
+				"client-negotiation",
 			))
 		}
 

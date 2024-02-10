@@ -23,6 +23,7 @@ repositories {
 }
 
 kotlin {
+	androidTarget()
 	explicitApi()
 
 	@OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -68,14 +69,15 @@ kotlin {
 	sourceSets {
 		val commonMain by getting {
 			dependencies {
-				implementation(misc.logging)
 				implementation(misc.klogging)
 				implementation(ktorio.bundles.client)
+				implementation(ktorio.bundles.server)
+				implementation(jetbrains.bundles.kotlinx)
 			}
 		}
 		val commonTest by getting {
 			dependencies {
-				implementation(ktorio.ktor.testing)
+				implementation(ktorio.client.testing)
 				implementation(kotlin("test-common"))
 				implementation(kotlin("test-annotations-common"))
 			}
@@ -83,16 +85,10 @@ kotlin {
 
 		val javaMain by creating {
 			dependsOn(commonMain)
-			dependencies {
-
-			}
 		}
 
 		val jvmMain by getting {
 			dependsOn(javaMain)
-			dependencies {
-
-			}
 		}
 
 		val jvmTest by getting {
@@ -104,9 +100,6 @@ kotlin {
 
 		val androidMain by getting {
 			dependsOn(javaMain)
-			dependencies {
-
-			}
 		}
 
 		val androidUnitTest by getting {
